@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body background="aj.jpg" >
+<center>
+  <h1>用户注册</h1>
+  <!--
+              form表单
+              form表单是用于将用户在页面上输入的信息提交给服务端使用的组件。
+              form表单中应当包含若干的输入组件.
+              注意:只有包含早form标签中间的输入组件中用户输入的信息才会提交给服务端!!
+
+              form上有两个重要的属性:
+              action:用于指定表单提交的路径，该路径需要服务端配合处理
+              method:表单提交的形式，有两个可选项:
+                     GET:地址栏形式提交，表单数据会拼接到地址栏的URL中传递
+                     POST:表单数据会被包含在请求的消息正文中被提交
+                     当表单数据含有用户隐私信息或附件上传时应当使用POST。
+
+                     method属性不指定时，默认是GET请求提交。
+           -->
+  <!--
+      由于请求当前注册页面时，浏览器地址栏上的路径为:
+      http://localhost:8080/reg.html
+      因此在当前页面上我们定义的表单<form action="/regUser">时，表单提交后的实际请求路径为:
+      http://localhost:8080/regUser
+
+      而提交后，我们的服务端拿到该URL中抽象路径(/regUser)后，第一个"/"首先去定位static目录下是否有
+      该文件，若有则直接发送给浏览器
+
+      表单用get形式提交后，浏览器地址栏的样子
+      http://localhost:8080/regUser?username=fancq&password=123456&nickname=chuanqi&age=22
+
+      表单中<form action="/regUser" method="get"> method的值为get时，表达用地址栏形式提交表单数据。
+      此时表单数据会被拼接到URL的抽象路径中。与抽象路径的请求部分以"?"形式分开
+      抽象路径格式:
+      请求路径(action指定的内容)?参数部分
+      /regUser?username=fancq&password=123456&nickname=chuanqi&age=22
+      参数部分的格式:
+      参数名1=参数值1&参数名2=参数值2&...
+      参数名是表单中某个输入框name属性指定的值
+      参数值是表单中该输入框用户在其中输入的内容
+
+      post
+   -->
+  <form action="/regUser" method="post"> <!-- 表单 action为表单提交地 -->
+  <br>
+    <table border="1">
+    <tr> <!--第一行 -->
+      <td>用户名</td>
+      <td><input name="username" type="text" ></td>
+    </tr>
+    <tr> <!-- 第二行 -->
+      <td>密码</td>
+      <td><input name="password" type="password"> </td>
+    </tr>
+    <tr> <!-- 第三行 -->
+      <td>昵称</td>
+      <td><input name="nickname" type="text"></td>
+    </tr>
+    <tr> <!-- 第四行 -->
+      <td>年龄</td>
+      <td><input name="age" type="text" ></td>
+    </tr>
+    <tr> <!-- 第五行 -->
+      <td colspan="2" align="center">
+        <input type="submit" value="注册">
+      </td>
+    </tr>
+  </table>
+  </form>
+</center>
+</body>
+</html>
