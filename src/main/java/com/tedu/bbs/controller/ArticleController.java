@@ -90,7 +90,7 @@ public class ArticleController {
             pw.println("            <td>标题</td>");
             pw.println("            <td>作者</td>");
             pw.println("        </tr>");
-            while (rs.next()){
+            while (rs.next()){//-----------------此处反应出动态页面的特点
                 String title1 = rs.getString(1);
                 String content = rs.getString(2);
                 pw.println("        <tr>");
@@ -128,16 +128,18 @@ public class ArticleController {
             return;
         }
         try(
-                Connection connection = DBUtil.getConnection()
+                Connection connection = DBUtil.getConnection()//与SQL建立连接
         ){
+            //根据表单上用户输入的作者名author来userinfo表中查找信息
             String sql = "SELECT username,id " +
                          "FROM userinfo " +
                          "WHERE username=?";
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);//预编译生成执行计划！
             ps.setString(1,author);
-            ResultSet rs = ps.executeQuery();//查找,反馈结果
-            if (rs.next()){
-                int id = rs.getInt("id");
+            ResultSet rs = ps.executeQuery();//★该方法会返回一个ResultSet对象，这个对象封装了查询出来的结果集。
+            if (rs.next()){ //判断结果集是否有一条记录
+                int id = rs.getInt("id");//获取查找的id
+                //将用户表单和查询的id插入到article表中
                 String sql1 = "INSERT INTO article(title,content,u_id) VALUES(?,?,?)";
                 PreparedStatement ps1 = connection.prepareStatement(sql1);
                 ps1.setString(1,title);
@@ -149,7 +151,7 @@ public class ArticleController {
                 }else {
                     response.sendRedirect("/write_article_fail.html");
                 }
-            }else {//没有此作者
+            }else {//若没有记录则没有此作者
                 response.sendRedirect("/have_not_user.html");
             }
         }catch (SQLException | IOException throwable){
