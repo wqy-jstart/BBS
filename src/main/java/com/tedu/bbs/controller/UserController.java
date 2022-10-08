@@ -124,9 +124,9 @@ public class UserController {
                 response.sendRedirect("/have_user.html");
                 return;
             }
-            sql = "INSERT INTO userinfo (username,password,nickname,age) " +
+            String sql1 = "INSERT INTO userinfo (username,password,nickname,age) " +
                     "VALUES(?,?,?,?)";
-            ps = connection.prepareStatement(sql);
+            ps = connection.prepareStatement(sql1);
             ps.setString(1,username);
             ps.setString(2,password);
             ps.setString(3,nickname);
